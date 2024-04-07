@@ -1,6 +1,6 @@
 import csv
 
-def analyze_records(csv_file):
+def analyze_financial_data(csv_file):
     total_months = 0
     net_profit_losses = 0
     previous_profit_loss = None
@@ -23,6 +23,7 @@ def analyze_records(csv_file):
             if previous_profit_loss is not None:
                 change = current_profit_loss - previous_profit_loss
                 total_change += change
+                changes.append(change)
                 if change > greatest_increase["amount"]:
                     greatest_increase["amount"] = change
                     greatest_increase["date"] = row["Date"]
@@ -37,14 +38,14 @@ def analyze_records(csv_file):
     return {
         "Total Months": total_months,
         "Net Total Amount of Profit/Losses": net_profit_losses,
-        "Average Changes in Profit/Losses": round(average_change, 2),
+        "Average Change in Profit/Losses": round(average_change, 2),
         "Greatest Increase in Profits": (greatest_increase["date"], greatest_increase["amount"]),
         "Greatest Decrease in Profits": (greatest_decrease["date"], greatest_decrease["amount"])
     }
 
 def main():
-    csv_file = "/Users/lisashimano/Documents/python-challenge/PyBank/Resources/budget_data.csv"
-    analysis_results = analyze_records(csv_file)
+    csv_file = "/Users/lisashimano/Documents/Week 3 Python Challenge/PyBank/Resources/budget_data.csv"
+    analysis_results = analyze_financial_data(csv_file)
 
     # Print analysis results
     for key, value in analysis_results.items():
